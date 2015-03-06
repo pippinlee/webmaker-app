@@ -3,7 +3,7 @@
 ## Install Android Debug Bridge (ADB)
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-d28E21PuRc" frameborder="0" allowfullscreen></iframe>
+<iframe width="775" height="436" src="https://www.youtube.com/embed/-d28E21PuRc" frameborder="0" allowfullscreen></iframe>
 
 For this project you will need the SDK command line tools. You can download and install from [developer.android.com](https://developer.android.com/sdk/index.html) or via brew:
 
@@ -24,15 +24,18 @@ adb version
 ```
 If you see something like `Android Debug Bridge version 1.0.32` you have adb installed properly. If you don't, see [this page on MDN](https://developer.mozilla.org/en-US/Firefox_OS/Debugging/Installing_ADB) for more help.
 
-## Install Andriod SDK
+## Install Android 19 (4.4) SDK platform
 
+<iframe width="775" height="436" src="https://www.youtube.com/embed/10XXnYteAqA" frameborder="0" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/10XXnYteAqA" frameborder="0" allowfullscreen></iframe>
+We'll also need to download the Android 19. To do this we'll download the SDK manager from [developer.android.com](https://developer.android.com/sdk/index.html).
+
+You'll also need to make sure Java and Java Development Kit are install in order to run the `Android` command.
 
 
 ## Turn on remote debugging on your device
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/idRdI2iN2Ek" frameborder="0" allowfullscreen></iframe>
+<iframe width="775" height="436" src="https://www.youtube.com/embed/idRdI2iN2Ek" frameborder="0" allowfullscreen></iframe>
 
 - Enable USB debugging on your phone. ([Check out this guide](http://www.phonearena.com/news/How-to-enable-USB-debugging-on-Android_id53909) if you need help)
 - Plug it into your computer via USB and run `adb devices` to make sure your device is recognized
@@ -49,14 +52,15 @@ If you see something like `Android Debug Bridge version 1.0.32` you have adb ins
 
 ## Remote debugging via Chrome dev tools (4.4 only)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JM1y3hyUU1Q" frameborder="0" allowfullscreen></iframe>
+<iframe width="775" height="436" src="https://www.youtube.com/embed/JM1y3hyUU1Q" frameborder="0" allowfullscreen></iframe>
 
+One of the best ways to debug the Webmaker app is through Chrome's developer tools.
 
 
 ## Remote debugging via logcat (works on 4.2+)
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/FfgT4XtLuq4" frameborder="0" allowfullscreen></iframe>
+<iframe width="775" height="436" src="https://www.youtube.com/embed/FfgT4XtLuq4" frameborder="0" allowfullscreen></iframe>
 
 
 
@@ -79,40 +83,6 @@ After you do that, all you need to do to re-build the app is run the following e
 ```
 npm run android
 ```
-
-## Debugging with weinre
-
-Unfortunately, Webview in Android 4.2 does not ship with a debugger – we will have to inject a script and hack in our own. To do this, install [weinre](http://people.apache.org/~pmuellr/weinre-docs/latest) via npm:
-
-```
-npm install -g weinre
-```
-
-In order to make debugging easier, you will also want to tunnel to the local port that `weinre` runs on (the alternative is making sure your local computer and phone are on the same network and looking up your IP address, which is time-consuming and requires constant re-configuration). You can use `ngrok` to do this. You can download it from [the ngrok website](https://ngrok.com/).
-
-Now that you have `weinre` and `ngrok` installed, first run
-
-```
-weinre --httpPort 1234
-```
-
-to start your weinre debugging server. You can use any port you want Then, create a tunnel to like this:
-
-```
-ngrok -subdomain=w1nr3 1234
-```
-
-Set the `subdomain` option to something short and unique. You will need to sign up for an account in order to choose a unique subdomain. If you prefer not to create an account on the ngrok site, you can just leave out the `-subdomain=w1nr3` command and ngrok will create a random subdomain that you can use. 
-
-After you've done that, `cd` into the `webmaker-app/` directory that you cloned from `mozilla/webmaker-app` and create a file called `.env` in the root directory, if it does not already exist. Add the following environment variable to it:
-
-```
-REMOTE_DEBUGGING=http://w1nr3.ngrok.com
-```
-
-This should be the match your `ngrok` URL. After that, kill and restart your `gulp dev` process to rebuild with the new environment.
-
-Finally, `cd` back to `webmaker-app-cordova/` and run `npm run android` to rebuild the android app and install on your device or emulator. Once it has been installed, visit `http://w1nr3.ngrok.com/client/#anonymous`. You will now be able to debug your remote device!
 
 
 ## Other tips
